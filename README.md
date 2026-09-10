@@ -32,6 +32,7 @@ Added tweaks:
 - [YouLoop](https://github.com/bhackel/YouLoop)
 - [YouSpeed](https://github.com/PoomSmart/YouSpeed)
 - [YouGetCaption](https://github.com/PoomSmart/YouGetCaption)
+- [YTLocalQueue](https://github.com/bpetrynski/YTLocalQueue)
 
 Original repo: https://github.com/dayanch96/YTLite
 
@@ -346,6 +347,12 @@ Fill out an [issue form](https://github.com/fosterbarnes/YTPlusYTweaks/issues) w
   <summary>YouFixPlaybackIssues</summary>
   <p>Fixes the notorious playback issue by presenting to YouTube servers as an Oculus Quest, bypassing the iOS sideload check. Developed by <a href="https://github.com/AppropriateNet2928">AppropriateNet2928</a> with the help of <a href="https://github.com/Tonwalter888">Tonwalter888</a>
   <p>Source code and additional information are available <a href="https://github.com/AppropriateNet2928/YTLitePlusRenewed/tree/main/YouFixPlaybackIssues">in AppropriateNet2928's GitHub repository</a>.</p>
+</details>
+
+<details>
+  <summary>YTLocalQueue</summary>
+  <p>Adds a local play queue with queue buttons and auto-advance to the next video.</p>
+  <p>Source code and additional information are available <a href="https://github.com/bpetrynski/YTLocalQueue">in bpetrynski's GitHub repository</a>.</p>
 </details>
 
 ## Credits

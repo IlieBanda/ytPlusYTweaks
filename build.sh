@@ -30,6 +30,7 @@ TWEAKS=(
     "YouSpeed|youspeed.deb|https://github.com/PoomSmart/YouSpeed.git||"
     "YouGetCaption|yougetcaption.deb|https://github.com/PoomSmart/YouGetCaption.git||"
     "YouFixPlaybackIssues|youfixplaybackissues.deb|https://github.com/AppropriateNet2928/YTLitePlusRenewed.git|||adec498be498fb535f5712a1df84ec349f6db93a|YouFixPlaybackIssues"
+    "YTLocalQueue|ytlocalqueue.deb|https://github.com/bpetrynski/YTLocalQueue.git||"
 )
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; NC='\033[0m'
@@ -364,6 +365,13 @@ processTweak() {
             if [[ -n "$extraFlags" ]]; then git clone --quiet --depth=1 $extraFlags "$repo" "$name"
             else git clone --quiet --depth=1 "$repo" "$name"; fi
         fi
+    fi
+
+    # YTLocalQueue #imports headers as "Headers/YouTubeHeader/...", but this
+    # project keeps YouTubeHeader in $THEOS/include. Bridge the two with a symlink.
+    if [[ "$name" == "YTLocalQueue" ]]; then
+        mkdir -p "$name/Headers"
+        [[ -e "$name/Headers/YouTubeHeader" ]] || ln -s "$THEOS/include/YouTubeHeader" "$name/Headers/YouTubeHeader"
     fi
 
     info "Building $name..."
