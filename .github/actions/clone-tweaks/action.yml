@@ -33,6 +33,8 @@ inputs:
     required: true
   enable_youfixplaybackissues:
     required: true
+  enable_ytlocalqueue:
+    required: true
   cache_youpip_hit:
     required: true
   cache_ytuhd_hit:
@@ -66,6 +68,8 @@ inputs:
   cache_yougetcaption_hit:
     required: true
   cache_yfpi_hit:
+    required: true
+  cache_ytlq_hit:
     required: true
   workspace:
     required: true
@@ -110,6 +114,8 @@ runs:
         CACHE_YOUGETCAPTION_HIT: ${{ inputs.cache_yougetcaption_hit }}
         ENABLE_YOUFIXPLAYBACKISSUES: ${{ inputs.enable_youfixplaybackissues }}
         CACHE_YFPI_HIT: ${{ inputs.cache_yfpi_hit }}
+        ENABLE_YTLOCALQUEUE: ${{ inputs.enable_ytlocalqueue }}
+        CACHE_YTLQ_HIT: ${{ inputs.cache_ytlq_hit }}
       run: |
         cd ${{ inputs.workspace }}
         
@@ -130,6 +136,7 @@ runs:
           "ENABLE_YOULOOP|CACHE_YOULOOP_HIT|https://github.com/bhackel/YouLoop.git|YouLoop|"
           "ENABLE_YOUSPEED|CACHE_YOUSPEED_HIT|https://github.com/PoomSmart/YouSpeed.git|YouSpeed|"
           "ENABLE_YOUGETCAPTION|CACHE_YOUGETCAPTION_HIT|https://github.com/PoomSmart/YouGetCaption.git|YouGetCaption|"
+          "ENABLE_YTLOCALQUEUE|CACHE_YTLQ_HIT|https://github.com/bpetrynski/YTLocalQueue.git|YTLocalQueue|"
         )
         
         for tweak in "${tweaks[@]}"; do

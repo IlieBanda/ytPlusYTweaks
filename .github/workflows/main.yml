@@ -88,6 +88,12 @@ on:
         required: true
         default: true
 
+      enable_ytlocalqueue:
+        description: "YTLocalQueue"
+        type: boolean
+        required: true
+        default: true
+
       enable_autoflex:
         description: "AutoFLEX (FLEX debugger)"
         type: boolean
@@ -164,7 +170,7 @@ jobs:
       - name: Hide sensitive inputs
         uses: levibostian/action-hide-sensitive-inputs@v1
         with:
-          exclude_inputs: bundle_id,display_name,enable_demc,enable_ryd,enable_youpip,enable_yq,enable_ytabconfig,enable_ytweaks,enable_yticons,enable_yougroupsettings,enable_ytuhd,enable_gonerino,enable_autoflex,enable_youmute,enable_youloop,enable_youspeed,enable_yougetcaption,enable_youfixplaybackissues,info_note,tweak_version,sdk_version
+          exclude_inputs: bundle_id,display_name,enable_demc,enable_ryd,enable_youpip,enable_yq,enable_ytabconfig,enable_ytweaks,enable_yticons,enable_yougroupsettings,enable_ytuhd,enable_gonerino,enable_autoflex,enable_youmute,enable_youloop,enable_youspeed,enable_yougetcaption,enable_youfixplaybackissues,enable_ytlocalqueue,info_note,tweak_version,sdk_version
 
       - name: Check if any tweaks are enabled
         id: check_tweaks
@@ -184,7 +190,8 @@ jobs:
              [ "${{ inputs.enable_youloop }}" = "true" ] || \
              [ "${{ inputs.enable_youspeed }}" = "true" ] || \
              [ "${{ inputs.enable_yougetcaption }}" = "true" ] || \
-             [ "${{ inputs.enable_youfixplaybackissues }}" = "true" ]; then
+             [ "${{ inputs.enable_youfixplaybackissues }}" = "true" ] || \
+             [ "${{ inputs.enable_ytlocalqueue }}" = "true" ]; then
             echo "enabled=true" >> $GITHUB_OUTPUT
             echo "Tweaks are enabled"
           else
@@ -212,6 +219,7 @@ jobs:
           enable_youspeed: ${{ steps.check_tweaks.outputs.enabled == 'true' && inputs.enable_youspeed || 'false' }}
           enable_yougetcaption: ${{ steps.check_tweaks.outputs.enabled == 'true' && inputs.enable_yougetcaption || 'false' }}
           enable_youfixplaybackissues: ${{ steps.check_tweaks.outputs.enabled == 'true' && inputs.enable_youfixplaybackissues || 'false' }}
+          enable_ytlocalqueue: ${{ steps.check_tweaks.outputs.enabled == 'true' && inputs.enable_ytlocalqueue || 'false' }}
 
       - name: Download and validate IPA
         run: |
@@ -333,6 +341,7 @@ jobs:
           enable_youspeed: ${{ inputs.enable_youspeed }}
           enable_yougetcaption: ${{ inputs.enable_yougetcaption }}
           enable_youfixplaybackissues: ${{ inputs.enable_youfixplaybackissues }}
+          enable_ytlocalqueue: ${{ inputs.enable_ytlocalqueue }}
           sdk_version: ${{ inputs.sdk_version }}
           youpip_commit: ${{ steps.commit_hashes.outputs.youpip }}
           ytuhd_commit: ${{ steps.commit_hashes.outputs.ytuhd }}
@@ -352,6 +361,7 @@ jobs:
           youspeed_commit: ${{ steps.commit_hashes.outputs.youspeed }}
           yougetcaption_commit: ${{ steps.commit_hashes.outputs.yougetcaption }}
           youfixplaybackissues_commit: ${{ steps.commit_hashes.outputs.youfixplaybackissues }}
+          ytlq_commit: ${{ steps.commit_hashes.outputs.ytlq }}
 
       - name: Clone tweaks
         if: steps.check_tweaks.outputs.enabled == 'true'
@@ -373,6 +383,7 @@ jobs:
           enable_youspeed: ${{ inputs.enable_youspeed }}
           enable_yougetcaption: ${{ inputs.enable_yougetcaption }}
           enable_youfixplaybackissues: ${{ inputs.enable_youfixplaybackissues }}
+          enable_ytlocalqueue: ${{ inputs.enable_ytlocalqueue }}
           cache_youpip_hit: ${{ steps.cache_tweaks_step.outputs.cache_youpip_hit }}
           cache_ytuhd_hit: ${{ steps.cache_tweaks_step.outputs.cache_ytuhd_hit }}
           cache_ryd_hit: ${{ steps.cache_tweaks_step.outputs.cache_ryd_hit }}
@@ -390,6 +401,7 @@ jobs:
           cache_youspeed_hit: ${{ steps.cache_tweaks_step.outputs.cache_youspeed_hit }}
           cache_yougetcaption_hit: ${{ steps.cache_tweaks_step.outputs.cache_yougetcaption_hit }}
           cache_yfpi_hit: ${{ steps.cache_tweaks_step.outputs.cache_yfpi_hit }}
+          cache_ytlq_hit: ${{ steps.cache_tweaks_step.outputs.cache_ytlq_hit }}
           workspace: ${{ github.workspace }}
 
       - name: Build tweaks
@@ -412,6 +424,7 @@ jobs:
           enable_youspeed: ${{ inputs.enable_youspeed }}
           enable_yougetcaption: ${{ inputs.enable_yougetcaption }}
           enable_youfixplaybackissues: ${{ inputs.enable_youfixplaybackissues }}
+          enable_ytlocalqueue: ${{ inputs.enable_ytlocalqueue }}
           cache_youpip_hit: ${{ steps.cache_tweaks_step.outputs.cache_youpip_hit }}
           cache_ytuhd_hit: ${{ steps.cache_tweaks_step.outputs.cache_ytuhd_hit }}
           cache_ryd_hit: ${{ steps.cache_tweaks_step.outputs.cache_ryd_hit }}
@@ -429,6 +442,7 @@ jobs:
           cache_youspeed_hit: ${{ steps.cache_tweaks_step.outputs.cache_youspeed_hit }}
           cache_yougetcaption_hit: ${{ steps.cache_tweaks_step.outputs.cache_yougetcaption_hit }}
           cache_yfpi_hit: ${{ steps.cache_tweaks_step.outputs.cache_yfpi_hit }}
+          cache_ytlq_hit: ${{ steps.cache_tweaks_step.outputs.cache_ytlq_hit }}
           theos_path: ${{ github.workspace }}/theos
           workspace: ${{ github.workspace }}
 
