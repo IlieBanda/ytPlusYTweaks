@@ -372,6 +372,8 @@ processTweak() {
     if [[ "$name" == "YTLocalQueue" ]]; then
         mkdir -p "$name/Headers"
         [[ -e "$name/Headers/YouTubeHeader" ]] || ln -s "$THEOS/include/YouTubeHeader" "$name/Headers/YouTubeHeader"
+        # Its own forward-decl of YTHUDMessage clashes with the real header; demote to a category.
+        sed -i '' 's/@interface YTHUDMessage : NSObject/@interface YTHUDMessage (YTLocalQueue)/' "$name/Tweak.xm"
     fi
 
     info "Building $name..."

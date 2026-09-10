@@ -160,6 +160,9 @@ runs:
                 # keeps YouTubeHeader in $THEOS/include. Bridge the two with a symlink.
                 mkdir -p Headers
                 [ -e Headers/YouTubeHeader ] || ln -s "$THEOS/include/YouTubeHeader" Headers/YouTubeHeader
+                # Its own forward-decl of YTHUDMessage clashes with the real header
+                # (GOOHUDManagerInternal.h pulls in YTHUDMessage.h). Demote it to a category.
+                sed -i '' 's/@interface YTHUDMessage : NSObject/@interface YTHUDMessage (YTLocalQueue)/' Tweak.xm
                 if [ -f Makefile ]; then
                   # Makefile hardcodes the SDK version in TARGET; use whichever SDK is installed
                   SDK_VER=$(basename "$(ls -d "$THEOS/sdks/iPhoneOS"*.sdk | head -1)" | sed 's/iPhoneOS\(.*\)\.sdk/\1/')
